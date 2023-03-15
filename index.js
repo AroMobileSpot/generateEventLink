@@ -25,12 +25,41 @@ function generateICalEvent(eventName, eventStartDate, eventEndDate, eventLocatio
 }
 
 function addEventToCalendar() {
-    var eventName = "Sample Event";
-    var eventStartDate = new Date("2023-03-17T09:00:00-07:00");
-    var eventEndDate = new Date("2023-03-17T11:00:00-07:00");
-    var eventLocation = "123 Main St, Anytown, USA";
-    var eventDescription = "This is a sample event description.";
+    const eventName = "Sample Event";
+    const eventStartDate = new Date("2023-03-17T09:00:00-07:00");
+    const eventEndDate = new Date("2023-03-17T11:00:00-07:00");
+    const eventLocation = "123 Main St, Anytown, USA";
+    const eventDescription = "This is a sample event description.";
   
-    var link = generateICalEvent(eventName, eventStartDate, eventEndDate, eventLocation, eventDescription);
-    window.open(link, "_blank");
-  }
+    const link = generateICalEvent(eventName, eventStartDate, eventEndDate, eventLocation, eventDescription);
+    
+}
+
+function generateWhatsAppLink() {
+    const eventName = "Sample Event";
+    const eventStartDate = new Date("2023-03-17T09:00:00-07:00");
+    const eventEndDate = new Date("2023-03-17T11:00:00-07:00");
+    const eventLocation = "123 Main St, Anytown, USA";
+    const eventDescription = "This is a sample event description.";
+
+    const icalUrl = generateICalEvent(eventName, eventStartDate, eventEndDate, eventLocation, eventDescription);
+    const whatsappLink = 'https://aromobilespot.github.io/generateEventLink/?ical=' +encodeURIComponent(icalUrl);
+    const resultpara = document.getElementById('resultLink');
+    resultpara.innerText = whatsappLink
+    return whatsappLink;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const queryParams = new URLSearchParams(window.location.search);
+    const params = {};
+    for (const pair of queryParams.entries()) {
+      params[pair[0]] = pair[1];
+    }
+    const {ical} = params
+    const intentURI = encodeURIComponent(ical);
+    if(ical){
+        const windowName = "_blank";
+        const windowFeatures = "width=600,height=400";
+        window.open(intentURI, windowName, windowFeatures)
+    }
+});

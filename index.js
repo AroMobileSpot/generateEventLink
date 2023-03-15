@@ -21,7 +21,7 @@ function generateICalEvent(eventName, eventStartDate, eventEndDate, eventLocatio
     link.href = uri;
     link.setAttribute("download", eventName + ".ics");
     link.innerHTML = "Add to Calendar";
-    return link.outerHTML;
+    return uri;
 }
 
 function addEventToCalendar() {

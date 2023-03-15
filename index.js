@@ -56,10 +56,10 @@ document.addEventListener("DOMContentLoaded", function() {
       params[pair[0]] = pair[1];
     }
     const {ical} = params
-    const intentURI = encodeURIComponent(ical);
+    const intentURI = ical;
     if(ical){
         const windowName = "_blank";
         const windowFeatures = "width=600,height=400";
-        window.open(intentURI, windowName, windowFeatures)
+        window.location.href = intentURI
     }
 });

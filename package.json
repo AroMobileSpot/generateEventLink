@@ -1,0 +1,35 @@
+{
+  "name": "generateeventlink",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client:build": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --sourcemap",
+    "client:production": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --minify",
+    "server:build": "esbuild server/src/server.js --bundle --outfile=build/server.js --platform=node --loader:.js=jsx",
+    "build": "npm run client:build && npm run server:build",
+    "start": "nodemon build/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AroMobileSpot/generateEventLink.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AroMobileSpot/generateEventLink/issues"
+  },
+  "homepage": "https://github.com/AroMobileSpot/generateEventLink#readme",
+  "dependencies": {
+    "esbuild": "^0.17.12",
+    "express": "^4.18.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.21.0",
+    "babel-plugin-transform-assets": "^1.0.2",
+    "nodemon": "^2.0.22"
+  }
+}

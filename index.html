@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anaya Event Generator</title>
-    <script src="index.js"></script>
+    <script src="bundle.js" async defer></script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Anaya générateur d'evenement</h1>
-        <button onclick="addEventToCalendar()">Add to Calendar</button>
-        <button onclick="generateWhatsAppLink()">generate whatsapp link</button>
-        <p id="resultLink"></p>
-    </div>
+    <div id="root"></div>
+
+    <!-- <script>
+        // Import the functions you need from the SDKs you need
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyDT3c6ELF17Mq1eO3t010kssVaTmWu5sek",
+            authDomain: "test-lab-1be41.firebaseapp.com",
+            projectId: "test-lab-1be41",
+            storageBucket: "test-lab-1be41.appspot.com",
+            messagingSenderId: "1018799592932",
+            appId: "1:1018799592932:web:a767d4485bab2938ed63f1",
+            measurementId: "G-JFF5FC7NEQ"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.getFirestore(app);
+        const eventsCollection = firebase.collection(database, "events");
+
+
+    </script>
+    <script></script>
+    <script src="index.js"></script> -->
 </body>
+
 </html>

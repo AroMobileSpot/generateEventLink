@@ -4,10 +4,10 @@ import * as ReactDOMServer from "react-dom/server";
 import { App } from "../../client/src/App";
 import path from "path";
 import fs from "fs";
-
+import router from "../router";
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/admin", (req, res) => {
   const reactApp = ReactDOMServer.renderToString(<App />);
   const indexFile = path.resolve("index.html");
   fs.readFile(indexFile, "utf8", (err, data) => {
@@ -22,6 +22,8 @@ app.get("/", (req, res) => {
     );
   });
 });
+
+app.use(router);
 
 app.use(express.static(path.resolve(__dirname, "..", "dist")));
 

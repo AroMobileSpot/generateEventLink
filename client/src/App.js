@@ -4,7 +4,7 @@ import routes from "../../shared/routes";
 import { NoMatch } from "./Page/NoMatch.js";
 
 export const App = () => {
-
+  console.log("router");
   // useEffect(() => {
   //   const redirectToDownload = async () => {
   //     const queryParams = new URLSearchParams(window.location.search);
@@ -29,17 +29,9 @@ export const App = () => {
       <Routes>
         {routes.map((route) => {
           const { path, component: C } = route;
-          return (
-            <Route
-              key={"key"+path}
-              path={path}
-              element={
-                <C  />
-              }
-            />
-          );
+          return <Route key={"key" + path} path={path} element={<C />} />;
         })}
-        <Route path='*' element={<NoMatch />} />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
     </React.Fragment>
   );

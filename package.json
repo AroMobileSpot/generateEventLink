@@ -9,7 +9,7 @@
     "client:production": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --minify",
     "server:build": "esbuild server/src/server.js --bundle --outfile=build/server.js --platform=node --loader:.js=jsx",
     "build": "npm run client:build && npm run server:build",
-    "start": "nodemon build/server.js"
+    "start": "nodemon --ext js,jsx --ignore dist/ build/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,8 @@
     "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.9.0"
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@babel/register": "^7.21.0",

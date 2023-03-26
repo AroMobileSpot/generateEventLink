@@ -2,9 +2,7 @@ import express from "express";
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
 
-import { matchPath } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
-import routes from "../../shared/routes";
 
 import { App } from "../../client/src/App";
 import path from "path";
@@ -12,11 +10,12 @@ import fs from "fs";
 
 const app = express();
 
+const pathRoot = path.resolve("dist");
+app.use(express.static(pathRoot));
+
 app.use("*", (req, res, next) => {
-  const activeRoute =
-    routes.find((route) => matchPath(route.path, req.url)) || {};
   const reactApp = ReactDOMServer.renderToString(
-    <StaticRouter location={req.url}>
+    <StaticRouter location={req.originalUrl}>
       <App />
     </StaticRouter>
   );
@@ -32,9 +31,6 @@ app.use("*", (req, res, next) => {
     );
   });
 });
-
-const pathRoot = path.resolve("dist");
-app.use(express.static(pathRoot));
 
 app.listen(4242, () => {
   console.log(`Server is listening on port: 4242`);

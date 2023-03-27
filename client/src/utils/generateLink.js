@@ -42,8 +42,6 @@ export async function generateICalEvent(
     },
     body: JSON.stringify(data),
   });
-
-  console.log("result", await result.json());
   // Write data to the database
 
   // Write data to the database

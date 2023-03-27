@@ -1,5 +1,6 @@
 import config from "../../../server/config";
 import { nanoid } from "nanoid";
+import moment from "moment";
 // Import the functions you need from the SDKs you need
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -12,8 +13,8 @@ export async function generateICalEvent(
   eventLocation,
   eventDescription
 ) {
-  const start = eventStartDate.toISOString().replace(/-|:|\.\d+/g, "");
-  const end = eventEndDate.toISOString().replace(/-|:|\.\d+/g, "");
+  const start = eventStartDate.replace(/-|:|\.\d+/g, "");
+  const end = eventEndDate.replace(/-|:|\.\d+/g, "");
 
   const content = [
     "BEGIN:VCALENDAR",
@@ -70,17 +71,41 @@ export async function addEventToCalendar() {
   );
 }
 
-export async function generateWhatsAppLink() {
-  const eventName = "Anaya Event";
-  const eventStartDate = new Date("2023-03-30T09:00:00-07:00");
-  const eventEndDate = new Date("2023-03-30T11:00:00-07:00");
-  const eventLocation = "123 Main St, Anytown, USA";
-  const eventDescription = "This is a sample event description.";
-
-  const idCal = await generateICalEvent(
+export async function generateWhatsAppLink(params) {
+  const {
     eventName,
+    eventDescription,
+    eventLocation,
     eventStartDate,
     eventEndDate,
+    eventStartHour,
+    eventEndHour,
+  } = params;
+
+  // const eventStartDate = new Date("2023-03-30T09:00:00-07:00");
+  // const eventEndDate = new Date("2023-03-30T11:00:00-07:00");
+  let start, end;
+  if (!eventStartHour || !eventEndHour) {
+    start = eventStartDate;
+    end = eventEndDate;
+  } else {
+    start = moment(
+      moment(eventStartDate).format("YYYY-MM-DD") +
+        "T" +
+        moment(eventStartHour).format("HH:mm:ss")
+    ).format("YYYYMMDD[T]HHmmss[Z]");
+    end = moment(
+      moment(eventEndDate).format("YYYY-MM-DD") +
+        "T" +
+        moment(eventEndHour).format("HH:mm:ss")
+    ).format("YYYYMMDD[T]HHmmss[Z]");
+  }
+
+  console.log("concatStartDate", start);
+  const idCal = await generateICalEvent(
+    eventName,
+    start,
+    end,
     eventLocation,
     eventDescription
   );

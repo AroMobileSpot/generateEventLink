@@ -5,11 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client:build": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --sourcemap",
-    "client:production": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --minify",
+    "css:build": "esbuild client/src/styles.css --bundle --outfile=dist/bundle.css --minify --sourcemap",
+    "client:build": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --loader:.css=file --sourcemap",
+    "client:production": "esbuild client/src/index.js --bundle --outfile=dist/bundle.js --loader:.js=jsx --loader:.css=file --minify",
     "server:build": "esbuild server/src/server.js --bundle --outfile=build/server.js --platform=node --loader:.js=jsx",
-    "build": "npm run client:build && npm run server:build",
-    "start": "nodemon build/server.js"
+    "build": "npm run css:build && npm run client:build && npm run server:build",
+    "esbuild-watch": "npm-run-all --parallel css:build -- --watch",
+    "build-prod": "npm run css:build && npm run client:production && npm run server:build",
+    "run-server": "nodemon build/server.js",
+    "start-dev": "nodemon --watch client/src --exec 'npm run build'",
+    "start": "npm run build-prod && npm run run-server"
   },
   "repository": {
     "type": "git",
@@ -25,7 +30,9 @@
     "esbuild": "^0.17.12",
     "express": "^4.18.2",
     "nanoid": "^3.3.6",
+    "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
+    "react-datetime": "^3.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {

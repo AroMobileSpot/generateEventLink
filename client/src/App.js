@@ -1,39 +1,115 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { generateWhatsAppLink } from "./utils/generateLink";
-
+import InputField from "./components/InputField";
+import moment from "moment";
 export const App = () => {
   const [calendarLink, setLink] = useState("");
-  // useEffect(() => {
-  //   const redirectToDownload = async () => {
-  //     const queryParams = new URLSearchParams(window.location.search);
-  //     const params = {};
-  //     for (const pair of queryParams.entries()) {
-  //       params[pair[0]] = pair[1];
-  //     }
-  //     const { idCal } = params;
-  //     // const querySnapshot = await getDocs(eventsCollection);
-  //     // console.log("querySnapshot", querySnapshot);
-  //     // querySnapshot.find((doc) => {
-  //     //   console.log("docu event", doc);
-  //     // });
-  //     if (idCal) {
-  //       window.location.href = idCal;
-  //     }
-  //   };
-  //   redirectToDownload();
-  // }, []);
-  // console.log("calendarLink", calendarLink);
-
+  const [formParams, setFormParams] = useState({
+    eventStartDate: moment().format(),
+    eventEndDate: moment().format(),
+  });
+  const [resultCopy, setCopy] = useState({});
   const onClick = async () => {
-    const result = await generateWhatsAppLink();
+    console.log("formParams", formParams);
+    const result = await generateWhatsAppLink(formParams);
     setLink(result);
   };
 
+  const copyPath = async (path) => {
+    navigator.clipboard
+      .writeText(path)
+      .then(() => {
+        console.log("Text copied to clipboard");
+        setCopy({ message: "Url copiée" });
+      })
+      .catch((error) => {
+        console.error("Error copying text: ", error);
+        setCopy({ error: "Un problème est survenu" });
+        setTimeout(() => setCopy({}), 2000);
+      });
+  };
+
+  const onChange = (e) => {
+    setFormParams((current) => ({
+      ...current,
+      [e.target.name]: e.target.value,
+    }));
+  };
   return (
     <>
-      <h1>Hello vous</h1>
-      <div onClick={onClick}>click ici pour générer un lien</div>
-      <span>{calendarLink}</span>
+      <div className="form-container">
+        <div className="form-content">
+          <h1 className="form-title">Anaya Event Manager</h1>
+          <InputField
+            onChange={onChange}
+            placeholder="Anaya Event Title..."
+            name={"eventName"}
+            className="textField"
+          />
+          <InputField
+            onChange={onChange}
+            placeholder="Emplacement de l'évènement..."
+            name={"eventLocation"}
+            className="textField"
+          />
+          <InputField
+            onChange={onChange}
+            placeholder="Déscription de l'évènement..."
+            name={"eventDescription"}
+            typeRender="textarea"
+            className="textField"
+          />
+          <div className="datepicker-container">
+            <div className="datetime-container">
+              <InputField
+                onChange={onChange}
+                placeholder="Début de l'évènement"
+                typeRender="datetime"
+                name={"eventStartDate"}
+                className="datetime-custom"
+                innerProps={{ timeFormat: false }}
+              />
+              <InputField
+                onChange={onChange}
+                placeholder="Début de l'évènement"
+                typeRender="datetime"
+                name={"eventStartHour"}
+                className="datetime-custom hour"
+                innerProps={{ dateFormat: false }}
+              />
+            </div>
+            <div className="datetime-container">
+              <InputField
+                onChange={onChange}
+                placeholder="Fin de l'évènement"
+                typeRender="datetime"
+                name={"eventEndDate"}
+                className="datetime-custom date"
+                innerProps={{ timeFormat: false }}
+              />
+              <InputField
+                onChange={onChange}
+                placeholder="Hour"
+                typeRender="datetime"
+                name={"eventEndHour"}
+                className="datetime-custom hour"
+                innerProps={{ dateFormat: false }}
+              />
+            </div>
+          </div>
+          <div className="button primary" onClick={onClick}>
+            Générer un lien
+          </div>
+          <span className="calendarLink" onClick={() => copyPath(calendarLink)}>
+            {calendarLink}
+          </span>
+          {
+            <span className={`messageCopy ${Object.keys(resultCopy)[0]}`}>
+              {resultCopy.message || resultCopy.error || ""}
+            </span>
+          }
+        </div>
+      </div>
     </>
   );
 };

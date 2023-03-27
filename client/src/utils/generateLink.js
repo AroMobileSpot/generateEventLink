@@ -84,24 +84,17 @@ export async function generateWhatsAppLink(params) {
 
   // const eventStartDate = new Date("2023-03-30T09:00:00-07:00");
   // const eventEndDate = new Date("2023-03-30T11:00:00-07:00");
-  let start, end;
-  if (!eventStartHour || !eventEndHour) {
-    start = eventStartDate;
-    end = eventEndDate;
-  } else {
-    start = moment(
-      moment(eventStartDate).format("YYYY-MM-DD") +
-        "T" +
-        moment(eventStartHour).format("HH:mm:ss")
-    ).format("YYYYMMDD[T]HHmmss[Z]");
-    end = moment(
-      moment(eventEndDate).format("YYYY-MM-DD") +
-        "T" +
-        moment(eventEndHour).format("HH:mm:ss")
-    ).format("YYYYMMDD[T]HHmmss[Z]");
-  }
+  const start = moment(
+    moment.utc(eventStartDate).format("YYYY-MM-DD") +
+      "T" +
+      moment.utc(eventStartHour).format("HH:mm:ss")
+  ).format("YYYYMMDD[T]HHmmss[Z]");
+  const end = moment(
+    moment.utc(eventEndDate).format("YYYY-MM-DD") +
+      "T" +
+      moment.utc(eventEndHour).format("HH:mm:ss")
+  ).format("YYYYMMDD[T]HHmmss[Z]");
 
-  console.log("concatStartDate", start);
   const idCal = await generateICalEvent(
     eventName,
     start,

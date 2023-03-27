@@ -7,6 +7,8 @@ export const App = () => {
   const [formParams, setFormParams] = useState({
     eventStartDate: moment().format(),
     eventEndDate: moment().format(),
+    eventEndHour: moment().format(),
+    eventStartHour: moment().format(),
   });
   const [resultCopy, setCopy] = useState({});
   const onClick = async () => {

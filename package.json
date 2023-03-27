@@ -24,6 +24,7 @@
   "dependencies": {
     "esbuild": "^0.17.12",
     "express": "^4.18.2",
+    "nanoid": "^3.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

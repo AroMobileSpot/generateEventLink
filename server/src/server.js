@@ -6,6 +6,7 @@ import path from "path";
 import fs from "fs";
 import router from "../router";
 const app = express();
+app.use(express.static(path.resolve(__dirname, "..", "dist")));
 
 app.get("/admin", (req, res) => {
   const reactApp = ReactDOMServer.renderToString(<App />);
@@ -22,9 +23,6 @@ app.get("/admin", (req, res) => {
     );
   });
 });
-
+app.use(express.json());
 app.use(router);
-
-app.use(express.static(path.resolve(__dirname, "..", "dist")));
-
 app.listen(4242);

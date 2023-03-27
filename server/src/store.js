@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 
-const pathToData = path.resolve("dist/data.json");
+const pathToData = path.resolve(__dirname, "..", "public", "data.json");
 
 export const addEventToStore = (req, res, next) => {
   const { idCal, dataLink } = req.body || {};
-
+  console.log("pathToData", pathToData);
   fs.readFile(pathToData, "utf8", (err, data) => {
     if (err) throw err;
     const jsonData = JSON.parse(data);

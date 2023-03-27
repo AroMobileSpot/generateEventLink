@@ -7,6 +7,7 @@ import fs from "fs";
 import router from "../router";
 const app = express();
 app.use(express.static(path.resolve(__dirname, "..", "dist")));
+app.use("/public", express.static(path.resolve(__dirname, "..", "public")));
 
 app.get("/admin", (req, res) => {
   const reactApp = ReactDOMServer.renderToString(<App />);

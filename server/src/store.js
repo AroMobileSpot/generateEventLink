@@ -44,9 +44,8 @@ export const addEventToStore = async (req, res, next) => {
 export const getEvent = async (id) => {
   const refs = doc(db, "Events", id);
   const docs = await getDoc(refs);
-  console.log("docs = ", docs);
   if (docs.exists()) {
-    console.log("Document data:", docs.data());
+    console.log("Document data is stored");
     return docs.data().dataLink;
   } else {
     // doc.data() will be undefined in this case

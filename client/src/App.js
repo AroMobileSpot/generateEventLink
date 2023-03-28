@@ -13,6 +13,7 @@ export const App = () => {
   const [resultCopy, setCopy] = useState({});
   const onClick = async () => {
     const result = await generateWhatsAppLink(formParams);
+    console.log("result", result);
     setLink(result);
   };
 

@@ -5,6 +5,7 @@ import { App } from "../../client/src/App";
 import path from "path";
 import fs from "fs";
 import router from "../router";
+
 const app = express();
 app.use(express.static(path.resolve(__dirname, "..", "dist")));
 app.use("/public", express.static(path.resolve(__dirname, "..", "public")));
